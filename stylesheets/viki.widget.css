@@ -86,7 +86,7 @@ a, a:visited {
   bottom: 0;
   left: 0;
   height: 60px;
-  background-color: rgba(0, 0, 0, 0.8);
+  background:  url(../images/translucent_black.png);
   color: #fff;
   font-size: 16px;
 }

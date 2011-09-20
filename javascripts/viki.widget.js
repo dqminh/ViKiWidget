@@ -1,0 +1,119 @@
+var currentImageIndex = 1;
+var maxImages = 0;
+var isInline = true;
+
+function generateFlashTemplate(swfURL, flashVars) {
+  return '<div id="flashContent"><object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" width="300" height="206" id="viki-movie" align="middle"><param name="movie" value="' + swfURL  + '"> <param name="quality" value="high"> <param name="bgcolor" value="#ffffff"> <param name="play" value="true"> <param name="loop" value="true"> <param name="wmode" value="window"> <param name="scale" value="showall"> <param name="menu" value="true"> <param name="devicefont" value="false"> <param name="salign" value=""> <param name="allowScriptAccess" value="sameDomain"> <param name="FlashVars" value="' + flashVars + '"> <!--[if !IE]>--><object type="application/x-shockwave-flash" data="' + swfURL  + '" width="300" height="200"> <param name="movie" value="' + swfURL  + '"> <param name="quality" value="high"> <param name="bgcolor" value="#ffffff"> <param name="play" value="true"> <param name="loop" value="true"> <param name="wmode" value="window"> <param name="scale" value="showall"> <param name="menu" value="true"> <param name="devicefont" value="false"> <param name="salign" value=""> <param name="allowScriptAccess" value="sameDomain"> <param name="FlashVars" value="' + flashVars + '" id="flashParams"> <!--<![endif]--> <div class="flash_install"><a href="http://www.adobe.com/go/getflash" target="_blank"><img src="http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif" alt="Get Adobe Flash player"></a></div> <!--[if !IE]>--> </object> <!--<![endif]--> </object> </div> ';
+}
+
+function splitEmbeddedUri(uri) {
+  return uri.split('?', 2);
+}
+
+
+
+$(document).ready(function() {
+  isInline = (window.location.href.search(/mode=inline/) !== -1);
+
+  $.getJSON("http://www.smackaho.st:3000/videos.json?&order_by=recent&thumbnail_size=mr_220_160&callback=?", function(data) {
+    maxImages = data.length;
+    $('#max_index').html(maxImages);
+
+    function isAllImagesLoaded() {
+      return ($('#images img').length == maxImages);
+    }
+
+    function hideLoading() {
+      $('#loading').fadeOut();
+    }
+
+    $.each(data, function(i, item) {
+      var oneIndex = i + 1;
+      if(item.thumbnails !== undefined) {
+        $.each(item.thumbnails, function(j, thumbnail) {
+          var image = new Image();
+
+          $(image).load(function() {
+            $('#images').append($(image));
+            if (i === 0) {
+              cloneImage($(image));
+            }
+
+          if (isAllImagesLoaded()) hideLoading();
+          }).error(function() {
+            $('#images').append('<img class="thumbnail thumbnail-' + oneIndex + '" src="images/missing_image.png" />');
+            if (isAllImagesLoaded()) hideLoading();
+          }).attr('src', thumbnail).addClass("thumbnail-" + oneIndex).addClass('thumbnail');
+        });
+      }
+    });
+
+    function wrapImageWithLink(image) {
+      var currentVideo = data[currentImageIndex-1];
+      var link = "";
+
+      if (isInline) {
+        link = $('<a href="#" class="playCurrentVideo"></a>');
+      } else {
+        link = $('<a href="' + currentVideo.uri  + '" target="_blank"></a>');
+      }
+      link.append(image);
+      return link;
+    }
+
+    function cloneImage(image) {
+      $('#video_screen').html(wrapImageWithLink(image.clone()));
+      updateCounter();
+      updateScreen();
+    }
+
+    function updateScreen() {
+      var currentVideo = data[currentImageIndex-1];
+      var link = "";
+
+      if (isInline) {
+        link = '<a href="#" class="playCurrentVideo">' + currentVideo.title + '</a>';
+      } else {
+        link = '<a href="' + currentVideo.uri  + '" target="_blank">' + currentVideo.title + '</a>';
+      }
+      $('#overlay .link_title').html(link);
+
+      $('#video_container').hover(function() {
+        $('#playCurrentVideo').text("Play Now");
+      }, function() {
+        $('#playCurrentVideo').text(currentVideo.title);
+      });
+
+      $('.playCurrentVideo').bind('click', function(e) {
+        if (isInline) {
+          var uri_arr = splitEmbeddedUri(currentVideo.embed_uri);
+          $('#video_screen').html(generateFlashTemplate(uri_arr[0], uri_arr[1]));
+          $('#overlay').hide();
+        }
+      });
+    }
+
+    function updateCounter() {
+      $('#current_index').html(currentImageIndex);
+    }
+
+    $('#left_button').bind('click', function() {
+      currentImageIndex--;
+      if (currentImageIndex < 1) {
+        currentImageIndex = maxImages;
+      }
+      cloneImage($('img.thumbnail-' + currentImageIndex));
+      $('#overlay').fadeIn();
+    });
+    $('#right_button').bind('click', function() {
+      currentImageIndex++;
+      if (currentImageIndex > maxImages) {
+        currentImageIndex = 1;
+      }
+      cloneImage($('img.thumbnail-' + currentImageIndex));
+      $('#overlay').fadeIn();
+    });
+
+  });
+
+});

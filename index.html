@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+	<title>ViKi Widget</title>
+
+  <link href="stylesheets/viki.widget.css" rel="stylesheet" type="text/css" />
+
+  <!--[if IE]>
+    <style type="text/css">
+    #overlay {
+      background-color: #000;
+    }
+    </style>
+  <![endif]-->
+
+  <script src="javascripts/jquery.min.js" type="text/javascript"></script>
+  <script src="javascripts/viki.widget.js" type="text/javascript"></script>
+</head>
+
+<body>
+
+  
+<div id="container">
+
+  <div id="header">
+    <a href="http://www.viki.com">
+      <img src="images/viki-logo.png" alt="ViKi" />
+    </a>
+    <h3>Videos</h3>
+    <a href="http://www.viki.com" title="Click here for more videos!" class="view_more" target="_blank">
+      View more videos
+    </a>
+  </div>
+
+  <div id="viki">
+    <div id="video_container">
+      <div id="video_screen">
+      </div>
+      <div id="overlay"><div class="link_title"></div></div>
+    </div>
+
+    <div id="controls">
+      <a href="#" id="left_button">&laquo;</a>
+      <span id="current_index">1</span> of <span id="max_index"></span>
+      <a href="#" id="right_button">&raquo;</a>
+    </div>
+  </div>
+
+  <div id="images"></div>
+
+  <div id="loading">
+    <img src="images/ajax-loader.gif" />
+  </div>
+
+</div>
+
+</body>
+</html>

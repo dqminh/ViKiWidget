@@ -35,6 +35,8 @@ $(document).ready(function() {
         var image = new Image();
 
         $(image).load(function() {
+          image.width = 300;
+          image.height = 206;
           $('#images').append($(image));
           if (i === 0) {
             cloneImage($(image));

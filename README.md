@@ -22,7 +22,7 @@ ViKi REST API
 
 ## GET videos
 
-Returns videos metadata with supports for some filters. Supported data type are JSON and XML
+Returns videos metadata with support for some filters. Supported response types are JSON and XML.
 
 ### Request
 
@@ -47,13 +47,13 @@ GET http://www.viki.com/videos.xml
       <td>origin_code
       <td>The country where the channel originated.
       <td>Any valid two-letter country code. For list of countries,
-      <a href="https://github.com/viki-org/ViKiWidget/blob/master/COUNTRIES.md">click here</a>
+      <a href="https://github.com/viki-org/ViKiWidget/blob/master/COUNTRIES.md">click here</a>.
     </tr>
     <tr>
       <td>subtitle_lang_code
       <td>Subtitle language filter for videos. Only videos which have subtitle completion rates of 95% or above will be returned.
       <td>Any valid two-letter language code,
-      <a href="https://github.com/viki-org/ViKiWidget/blob/master/LANGUAGES.md">click here</a>
+      <a href="https://github.com/viki-org/ViKiWidget/blob/master/LANGUAGES.md">click here</a>.
     </tr>
     <tr>
       <td>type
@@ -69,7 +69,7 @@ GET http://www.viki.com/videos.xml
       <td>news_country_code
       <td>Filter the news videos by country. This parameter is only applicable if type is "news".
       <td>Any valid two-letter country code. For list of countries,
-      <a href="https://github.com/viki-org/ViKiWidget/blob/master/COUNTRIES.md">click here</a>
+      <a href="https://github.com/viki-org/ViKiWidget/blob/master/COUNTRIES.md">click here</a>.
     </tr>
   </tbody>
 
@@ -87,7 +87,7 @@ GET http://www.viki.com/videos.xml
 * `uri`: link to the video on ViKi website
 * `thumbnails`: list of URIs for the video's thumbnail sizes
 
-The following is a sample XML response for GET videos. Notice that we are returning all thumbnail sizes because the `thumbnail_size` parameters are not specified
+The following is a sample XML response for GET videos. Notice that we are returning all thumbnail sizes because the `thumbnail_size` parameter is not specified.
 
 ```xml
 GET http://www.viki.com/videos.xml
@@ -133,4 +133,16 @@ GET http://www.viki.com/videos.json
     "uri": "http://www.smackaho.st:3000/channels/1049-strong-heart/videos/52272"
   },
 }
+```
+
+### Sample Code
+
+Here is a sample jQuery code to parse the JSON response:
+
+```
+$.getJSON("http://www.viki.com/videos.json?&order_by=recent&thumbnail_size=mr_220_160&callback=?", function(data) {
+    $.each(data, function(i, item) {
+      alert('Video title is ' + item.title);
+    });
+    });
 ```

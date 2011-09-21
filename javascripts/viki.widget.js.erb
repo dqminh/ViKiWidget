@@ -29,24 +29,22 @@ $(document).ready(function() {
 
     $.each(data, function(i, item) {
       var oneIndex = i + 1;
-      if(item.thumbnails !== undefined) {
-        var thumbnail = (item.thumbnails.length > 0) ? item.thumbnails[0] : false;
+      var thumbnailPreference = 'mr_220_160';
+      if(item.thumbnails !== undefined && item.thumbnails[thumbnailPreference] !== undefined) {
+        var thumbnail = item.thumbnails[thumbnailPreference];
+        var image = new Image();
 
-        if (thumbnail !== false) {
-          var image = new Image();
-
-          $(image).load(function() {
-            $('#images').append($(image));
-            if (i === 0) {
-              cloneImage($(image));
-            }
+        $(image).load(function() {
+          $('#images').append($(image));
+          if (i === 0) {
+            cloneImage($(image));
+          }
 
           if (isAllImagesLoaded()) hideLoading();
-          }).error(function() {
-            $('#images').append('<img class="thumbnail thumbnail-' + oneIndex + '" src="images/missing_image.png" />');
-            if (isAllImagesLoaded()) hideLoading();
-          }).attr('src', thumbnail).addClass("thumbnail-" + oneIndex).addClass('thumbnail');
-        }
+        }).error(function() {
+          $('#images').append('<img class="thumbnail thumbnail-' + oneIndex + '" src="images/missing_image.png" />');
+          if (isAllImagesLoaded()) hideLoading();
+        }).attr('src', thumbnail).addClass("thumbnail-" + oneIndex).addClass('thumbnail');
       }
     });
 

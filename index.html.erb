@@ -7,10 +7,10 @@
 
 	<title>ViKi Widget</title>
 
-  <link href="stylesheets/viki.widget.css" rel="stylesheet" type="text/css" />
+  <link href="/widget/<%= @destination %>/stylesheets/viki.widget.css" rel="stylesheet" type="text/css" />
 
-  <script src="javascripts/jquery.min.js" type="text/javascript"></script>
-  <script src="javascripts/viki.widget.js" type="text/javascript"></script>
+  <script src="/widget/<%= @destination %>/javascripts/jquery.min.js" type="text/javascript"></script>
+  <script src="/widget/<%= @destination %>/javascripts/viki.widget.js" type="text/javascript"></script>
 </head>
 
 <body>
@@ -20,7 +20,7 @@
 
   <div id="header">
     <a href="http://www.viki.com">
-      <img src="images/viki-logo.png" alt="ViKi" />
+      <img src="/widget/<%= @destination %>/images/viki-logo.png" alt="ViKi" />
     </a>
     <h3>Videos</h3>
     <a href="http://www.viki.com" title="Click here for more videos!" class="view_more" target="_blank">
@@ -45,7 +45,7 @@
   <div id="images"></div>
 
   <div id="loading">
-    <img src="images/ajax-loader.gif" />
+    <img src="/widget/<%= @destination %>/images/ajax-loader.gif" />
   </div>
 
 </div>

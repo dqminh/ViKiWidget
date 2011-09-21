@@ -15,18 +15,24 @@ compiled_destination = CONFIG['compiled_destination']
 @widget_viki_path = @viki_path + '/public/widget'
 
 def compile_asset(file_name, file_contents)
+
   js_compressor = YUI::JavaScriptCompressor.new(:munge => true)
   css_compressor = YUI::CssCompressor.new
   if file_name =~ /css/
     css_compressor.compress(file_contents)
   elsif file_name =~ /js/
-    js_compressor.compress(file_contents)
+    if CONFIG['minify_js'] == true
+      js_compressor.compress(file_contents)
+    else
+      file_contents
+    end
   else
     file_contents.gsub(/\n/, '')
   end
 end
 
 [staging_config, production_config, development_config].each do |config|
+  @destination = config['destination']
   deploy_destination = "#{compiled_destination}/#{config['destination']}"
   
   erb_paths = ["index.html.erb", "iframe_inline.html.erb", "iframe_new_window.html.erb", "javascripts/viki.widget.js.erb",
@@ -44,7 +50,7 @@ end
   erb_paths.each do |template|
 
     @viki_web = config['viki_web']
-    @viki_widget_url = @viki_web + "/widget"
+    @viki_widget_url = @viki_web + "/widget/" + @destination
     
     erb_template = ERB.new(File.open(template).read)
     file_name = template.gsub(/\.erb/, '')

@@ -46,12 +46,14 @@ GET http://www.viki.com/videos.xml
     <tr>
       <td>origin_code
       <td>The country where the channel originated.
-      <td>Any valid two-letter country code
+      <td>Any valid two-letter country code. For list of countries,
+      <a href="https://github.com/viki-org/ViKiWidget/blob/master/COUNTRIES.md">click here</a>
     </tr>
     <tr>
       <td>subtitle_lang_code
       <td>Subtitle language filter for videos. Only videos which have subtitle completion rates of 95% or above will be returned.
-      <td>Any valid two-letter language code
+      <td>Any valid two-letter language code,
+      <a href="https://github.com/viki-org/ViKiWidget/blob/master/LANGUAGES.md">click here</a>
     </tr>
     <tr>
       <td>type
@@ -65,8 +67,9 @@ GET http://www.viki.com/videos.xml
     </tr>
     <tr>
       <td>news_country_code
-      <td>
-      <td>
+      <td>Filter the news videos by country. This parameter is only applicable if type is "news".
+      <td>Any valid two-letter country code. For list of countries,
+      <a href="https://github.com/viki-org/ViKiWidget/blob/master/COUNTRIES.md">click here</a>
     </tr>
   </tbody>
 

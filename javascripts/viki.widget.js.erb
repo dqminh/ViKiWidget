@@ -15,7 +15,7 @@ function splitEmbeddedUri(uri) {
 $(document).ready(function() {
   isInline = (window.location.href.search(/mode=inline/) !== -1);
 
-  $.getJSON("http://www.smackaho.st:3000/videos.json?&order_by=recent&thumbnail_size=mr_220_160&callback=?", function(data) {
+  $.getJSON("<%= @viki_web %>/videos.json?&order_by=recent&thumbnail_size=mr_220_160&callback=?", function(data) {
     maxImages = data.length;
     $('#max_index').html(maxImages);
 

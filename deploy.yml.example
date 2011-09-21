@@ -1,0 +1,14 @@
+compiled_destination: compiled_files
+viki_path: ""
+
+development:
+  destination: "development"
+  viki_web: ""
+
+staging:
+  destination: "staging"
+  viki_web: ""
+
+production:
+  destination: ""
+  viki_web: "http://www.viki.com"
